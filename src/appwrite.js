@@ -41,11 +41,14 @@ export const updateSearchCount = async (searchTerm, movie) => {
 
 export const getTrendingMovies = async () => {
     try {
-        const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID,[Query.limit(5),
-        Query.orderDesc("count")])
+        const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
+            Query.limit(5),
+            Query.orderDesc("count"),
+        ]);
 
-        return result.documents
-    }catch(error){
-        console.log(error)
+        return result.documents;
+    } catch (error) {
+        console.error("getTrendingMovies error:", error);
+        return []; // so your frontend doesn’t try to read undefined.length
     }
 }
